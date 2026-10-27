@@ -1,0 +1,619 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>три звезды</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --moon: #e7eaff;
+    --blue: #9eafff;
+    --gold: #ffe7a6;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: #030612;
+    color: #f4f3ff;
+    font-family: Georgia, "Times New Roman", serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 35px 18px;
+    position: relative;
+}
+
+/* космический фон */
+
+.space {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 50% 45%, #19264d 0%, #0a1028 38%, #030612 78%);
+}
+
+.nebula {
+    position: absolute;
+    width: 75vw;
+    height: 75vw;
+    max-width: 800px;
+    max-height: 800px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+        rgba(76, 91, 177, 0.13),
+        rgba(64, 75, 153, 0.04) 45%,
+        transparent 70%);
+    top: 5%;
+    left: 10%;
+    animation: nebulaFloat 18s ease-in-out infinite alternate;
+}
+
+.nebula.two {
+    width: 65vw;
+    height: 65vw;
+    top: 40%;
+    left: 35%;
+    background: radial-gradient(circle,
+        rgba(125, 79, 176, 0.1),
+        rgba(70, 65, 145, 0.03) 50%,
+        transparent 70%);
+    animation-delay: -8s;
+}
+
+@keyframes nebulaFloat {
+    from { transform: translate(-3%, -2%) scale(0.95); }
+    to { transform: translate(5%, 4%) scale(1.1); }
+}
+
+#stars {
+    position: absolute;
+    inset: 0;
+}
+
+.background-star {
+    position: absolute;
+    border-radius: 50%;
+    background: #fff;
+    opacity: 0;
+    animation: twinkle var(--duration) ease-in-out infinite alternate;
+    animation-delay: var(--delay);
+}
+
+@keyframes twinkle {
+    0% { opacity: 0.12; transform: scale(0.75); }
+    100% { opacity: var(--brightness); transform: scale(1.2); }
+}
+
+/* главный блок */
+
+.container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 690px;
+    text-align: center;
+    padding: 42px 25px 34px;
+    border: 1px solid rgba(188, 199, 255, 0.14);
+    border-radius: 30px;
+    background: rgba(7, 12, 30, 0.65);
+    box-shadow:
+        0 0 100px rgba(83, 106, 226, 0.09),
+        inset 0 0 35px rgba(132, 147, 255, 0.025);
+    backdrop-filter: blur(12px);
+    animation: containerAppear 1.8s ease both;
+}
+
+@keyframes containerAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+        filter: blur(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+.eyebrow {
+    color: #a9b7ed;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin-bottom: 23px;
+    animation: fadeIn 1.8s 0.3s both;
+}
+
+h1 {
+    font-size: clamp(36px, 7vw, 53px);
+    font-weight: normal;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    text-shadow: 0 0 35px rgba(160, 177, 255, 0.22);
+    animation: titleAppear 2s 0.4s both;
+}
+
+@keyframes titleAppear {
+    from { opacity: 0; letter-spacing: 10px; filter: blur(8px); }
+    to { opacity: 1; letter-spacing: 2px; filter: blur(0); }
+}
+
+.subtitle {
+    max-width: 430px;
+    margin: 0 auto;
+    color: #b9c2e2;
+    font-size: 16px;
+    line-height: 1.9;
+    animation: fadeIn 2s 0.8s both;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.divider {
+    width: 80px;
+    height: 1px;
+    margin: 30px auto;
+    background: linear-gradient(90deg, transparent, #b9c6ff, transparent);
+    box-shadow: 0 0 12px rgba(174, 192, 255, 0.3);
+    animation: dividerAppear 2s 1s both;
+}
+
+@keyframes dividerAppear {
+    from { opacity: 0; width: 0; }
+    to { opacity: 1; width: 80px; }
+}
+
+.instruction {
+    color: #929fc9;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+    animation: fadeIn 2s 1.2s both;
+}
+
+/* три звезды */
+
+.stars {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(14px, 6vw, 50px);
+    margin: 12px 0 25px;
+    animation: fadeIn 2s 1.4s both;
+}
+
+.star-button {
+    appearance: none;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    background: transparent;
+    color: #b9c6ff;
+    width: 100px;
+    height: 110px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    transition:
+        transform 0.5s ease,
+        color 0.5s ease,
+        background 0.5s ease,
+        border-color 0.5s ease,
+        filter 0.5s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.star-symbol {
+    display: inline-block;
+    font-size: 43px;
+    line-height: 1;
+    text-shadow: 0 0 14px rgba(166, 187, 255, 0.7);
+    animation: starFloat 4s ease-in-out infinite;
+    transition: transform 0.6s ease, text-shadow 0.6s ease;
+}
+
+.star-button:nth-child(2) .star-symbol {
+    animation-delay: -1.4s;
+}
+
+.star-button:nth-child(3) .star-symbol {
+    animation-delay: -2.7s;
+}
+
+@keyframes starFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-5px) rotate(8deg); }
+}
+
+.star-label {
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #8998c5;
+    transition: color 0.4s ease;
+}
+
+.star-button:hover {
+    transform: translateY(-7px) scale(1.06);
+    color: #fff0bb;
+    background: rgba(155, 176, 255, 0.055);
+    border-color: rgba(181, 197, 255, 0.22);
+    filter: drop-shadow(0 0 15px rgba(157, 180, 255, 0.35));
+}
+
+.star-button:hover .star-symbol {
+    text-shadow:
+        0 0 12px #fff,
+        0 0 28px #a9bbff,
+        0 0 48px #758fff;
+}
+
+.star-button.opened {
+    color: var(--gold);
+    background: rgba(255, 230, 166, 0.055);
+    border-color: rgba(255, 231, 166, 0.24);
+    filter: drop-shadow(0 0 13px rgba(255, 222, 135, 0.28));
+}
+
+.star-button.opened .star-symbol {
+    text-shadow:
+        0 0 12px #fff2c7,
+        0 0 25px #ffe5a0,
+        0 0 45px rgba(255, 215, 112, 0.65);
+    animation: starFound 1s ease both, starFloat 4s 1s ease-in-out infinite;
+}
+
+.star-button.opened .star-label {
+    color: #f0dca5;
+}
+
+@keyframes starFound {
+    0% { transform: scale(0.5) rotate(-35deg); }
+    55% { transform: scale(1.4) rotate(12deg); }
+    100% { transform: scale(1) rotate(0); }
+}
+
+/* истории */
+
+.story {
+    display: none;
+    max-width: 520px;
+    text-align: left;
+    margin: 15px auto 0;
+    padding: 27px 24px;
+    border-radius: 19px;
+    border: 1px solid rgba(181, 196, 255, 0.18);
+    background: linear-gradient(
+        135deg,
+        rgba(25, 36, 72, 0.78),
+        rgba(12, 19, 43, 0.82)
+    );
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.14);
+}
+
+.story.visible {
+    display: block;
+    animation: storyAppear 1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes storyAppear {
+    0% {
+        opacity: 0;
+        transform: translateY(22px) scale(0.98);
+        filter: blur(6px);
+    }
+    65% {
+        opacity: 1;
+        filter: blur(0);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+.story-number {
+    color: #e5cc91;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    margin-bottom: 15px;
+}
+
+.story h2 {
+    font-weight: normal;
+    font-size: 25px;
+    line-height: 1.4;
+    margin-bottom: 14px;
+    color: #f2f0ff;
+}
+
+.story p {
+    color: #cbd3ec;
+    font-size: 16px;
+    line-height: 1.95;
+}
+
+.quote-mark {
+    color: #e5cc91;
+    font-size: 25px;
+}
+
+/* счётчик */
+
+.progress {
+    margin-top: 25px;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    color: #8594bf;
+    transition: color 0.5s ease;
+    animation: fadeIn 2s 1.6s both;
+}
+
+/* финальная надпись */
+
+.final-message {
+    display: none;
+    margin: 24px auto 0;
+    padding: 20px 10px 4px;
+    color: var(--gold);
+    font-size: clamp(21px, 5vw, 26px);
+    line-height: 1.7;
+    text-shadow: 0 0 22px rgba(255, 221, 142, 0.25);
+}
+
+.final-message.visible {
+    display: block;
+    animation: finalAppear 2.5s ease both;
+}
+
+@keyframes finalAppear {
+    0% {
+        opacity: 0;
+        transform: translateY(12px);
+        letter-spacing: 8px;
+        filter: blur(8px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        letter-spacing: 1px;
+        filter: blur(0);
+    }
+}
+
+.footer {
+    margin-top: 35px;
+    color: #657298;
+    font-family: Arial, sans-serif;
+    font-size: 9px;
+    letter-spacing: 2.5px;
+    animation: fadeIn 2s 1.8s both;
+}
+
+@media (max-width: 420px) {
+    body {
+        padding: 18px 12px;
+    }
+
+    .container {
+        padding: 32px 15px 27px;
+        border-radius: 24px;
+    }
+
+    .stars {
+        gap: 4px;
+    }
+
+    .star-button {
+        width: 85px;
+        height: 100px;
+    }
+
+    .star-symbol {
+        font-size: 37px;
+    }
+
+    .story {
+        padding: 22px 18px;
+    }
+
+    .story p {
+        font-size: 15px;
+    }
+}
+
+/* уважение к настройке уменьшения анимации */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="space">
+    <div class="nebula"></div>
+    <div class="nebula two"></div>
+    <div id="stars"></div>
+</div>
+
+<main class="container">
+
+    <div class="eyebrow">маленькая история</div>
+
+    <h1>три звезды</h1>
+
+    <p class="subtitle">
+        иногда самые интересные истории начинаются с маленькой загадки
+    </p>
+
+    <div class="divider"></div>
+
+    <p class="instruction">выбери звезду и открой её историю</p>
+
+    <div class="stars">
+
+        <button class="star-button" data-story="1"
+        aria-label="открыть первую звезду">
+            <span class="star-symbol">✦</span>
+            <span class="star-label">№ 01</span>
+        </button>
+
+        <button class="star-button" data-story="2"
+        aria-label="открыть вторую звезду">
+            <span class="star-symbol">✧</span>
+            <span class="star-label">№ 02</span>
+        </button>
+
+        <button class="star-button" data-story="3"
+        aria-label="открыть третью звезду">
+            <span class="star-symbol">✦</span>
+            <span class="star-label">№ 03</span>
+        </button>
+
+    </div>
+
+    <section class="story" id="story-1">
+        <div class="story-number">ФРАГМЕНТ № 1 · НАЧАЛО</div>
+        <h2>с чего всё начинается</h2>
+        <p><span class="quote-mark">“</span>у каждой истории есть причина, с которой всё начинается, иногда это всего лишь желание подарить кому-то немного хорошего настроения<span class="quote-mark">”</span></p>
+    </section>
+
+    <section class="story" id="story-2">
+        <div class="story-number">ФРАГМЕНТ № 2 · ХАРАКТЕР</div>
+        <h2>немного больше, чем слова</h2>
+        <p><span class="quote-mark">“</span>иногда легче сделать маленький поступок, чем подобрать правильные слова, особенно когда хочется, чтобы тебя увидели с другой стороны<span class="quote-mark">”</span></p>
+    </section>
+
+  
+<section class="story" id="story-3">
+    <div class="story-number">ФРАГМЕНТ № 3 · СЛЕД</div>
+    <h2>то, что между строк</h2>
+    <p><span class="quote-mark">“</span>не каждая история открывается с первой страницы, иногда самое интересное скрывается между строк, и лишь время помогает понять, что всё это значило<span class="quote-mark">”</span></p>
+</section>
+
+    <div class="progress" id="progress">
+        ОТКРЫТО 0 ИЗ 3
+    </div>
+
+    <div class="final-message" id="final-message">
+        это только начало…
+    </div>
+
+    <div class="footer">
+        НЕ ВСЕ ЗВЁЗДЫ ПОКАЗЫВАЮТ ПУТЬ
+    </div>
+
+</main>
+
+<script>
+const starsContainer = document.getElementById("stars");
+const starButtons = document.querySelectorAll(".star-button");
+const stories = document.querySelectorAll(".story");
+const progress = document.getElementById("progress");
+const finalMessage = document.getElementById("final-message");
+
+const openedStars = new Set();
+
+// создаём сотню мерцающих звёзд на фоне
+for (let i = 0; i < 100; i++) {
+    const star = document.createElement("span");
+    star.className = "background-star";
+
+    const size = Math.random() * 2 + 0.5;
+
+    star.style.left = Math.random() * 100 + "%";
+    star.style.top = Math.random() * 100 + "%";
+    star.style.width = size + "px";
+    star.style.height = size + "px";
+
+    star.style.setProperty(
+        "--duration",
+        (2 + Math.random() * 4) + "s"
+    );
+
+    star.style.setProperty(
+        "--delay",
+        (-Math.random() * 5) + "s"
+    );
+
+    star.style.setProperty(
+        "--brightness",
+        (0.35 + Math.random() * 0.65).toFixed(2)
+    );
+
+    starsContainer.appendChild(star);
+}
+
+// открываем истории по нажатию
+starButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        const number = button.dataset.story;
+        const selectedStory = document.getElementById("story-" + number);
+        const wasVisible = selectedStory.classList.contains("visible");
+
+        // скрываем предыдущую историю
+        stories.forEach((story) => {
+            story.classList.remove("visible");
+        });
+
+        // повторное нажатие закрывает текущую историю
+        if (!wasVisible) {
+            selectedStory.classList.add("visible");
+        }
+
+        // отмечаем найденную звезду
+        openedStars.add(number);
+        button.classList.add("opened");
+        button.querySelector(".star-symbol").textContent = "★";
+
+        progress.textContent =
+            "ОТКРЫТО " + openedStars.size + " ИЗ 3";
+
+        // после всех трёх звёзд появляется надпись
+        if (openedStars.size === 3) {
+            finalMessage.classList.add("visible");
+            progress.style.color = "#e5cc91";
+        }
+
+        // плавно перемещаем историю в область видимости на телефоне
+        if (!wasVisible) {
+            setTimeout(() => {
+                selectedStory.scrollIntoView({
+                    behavior: "smooth",
+                    block: "nearest"
+                });
+            }, 100);
+        }
+    });
+});
+</script>
+
+</body>
+</html>
